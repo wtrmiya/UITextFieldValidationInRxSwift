@@ -7,6 +7,8 @@
 
 import UIKit
 import SwiftUI
+import RxSwift
+import RxCocoa
 
 final class CharacterCountMaxViewController: UIViewController {
     private let myTextField:UITextField = {
@@ -19,13 +21,35 @@ final class CharacterCountMaxViewController: UIViewController {
     private let myButton:UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("init", for: .normal)
+        button.layer.borderColor = button.tintColor.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10
+        button.isEnabled = false
         return button
     }()
+    
+    private var viewModel:CharacterCountMaxViewModel!
+    private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        setupViewModel()
+    }
+    
+    private func setupViewModel() {
+        viewModel = CharacterCountMaxViewModel()
+        
+        let input = CharacterCountMaxViewModel.Input(
+            inputText: myTextField.rx.text.orEmpty.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isValid
+            .drive(myButton.rx.isEnabled)
+            .disposed(by: bag)
     }
     
     private func setupUI() {
