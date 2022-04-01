@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let vc = MainListViewController()
-        let vc = CharacterCountMaxViewController()
+        let vc = CharacterCountRangeViewController()
         let navigationController = UINavigationController(rootViewController: vc)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
