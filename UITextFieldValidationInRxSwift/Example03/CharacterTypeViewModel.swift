@@ -20,19 +20,28 @@ final class CharacterTypeViewModel: CharacterTypeViewModelType {
     struct Input {
         // inputs (Observable)
         let textToCheckUppercaseOnly: Observable<String>
+        let textToCheckLowercaseOnly: Observable<String>
     }
     
     struct Output {
         // outputs (Driver, Binder, Observable)
         let isValidForUppercaseOnly: Driver<Bool>
+        let isValidForLowercaseOnly: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
-        let outputs = input.textToCheckUppercaseOnly
-            .map { $0.count > 0 && $0 == $0.uppercased() }
+        let outputForUppercaseValidation = input.textToCheckUppercaseOnly
+            .map(Validation.isAllUppercase)
             .asDriver(onErrorJustReturn: false)
         
-        return Output(isValidForUppercaseOnly: outputs)
+        let outputForLowercaseValidation = input.textToCheckLowercaseOnly
+            .map(Validation.isAllLowercase)
+            .asDriver(onErrorJustReturn: false)
+        
+        return Output(
+            isValidForUppercaseOnly: outputForUppercaseValidation,
+            isValidForLowercaseOnly: outputForLowercaseValidation
+        )
     }
 }
 

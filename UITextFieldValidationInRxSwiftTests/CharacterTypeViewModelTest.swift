@@ -29,21 +29,29 @@ class CharacterTypeViewModelTest: XCTestCase {
         super.tearDown()
     }
     
-    func testViewModel() {
+    private func createViewModelInput(
+        textToCheckUppercaseOnly: Observable<String>? = nil,
+        textToCheckLowercaseOnly: Observable<String>? = nil
+    ) -> CharacterTypeViewModel.Input {
+        return CharacterTypeViewModel.Input(
+            textToCheckUppercaseOnly: textToCheckUppercaseOnly ?? PublishSubject<String>().asObservable(),
+            textToCheckLowercaseOnly: textToCheckLowercaseOnly ?? PublishSubject<String>().asObservable()
+        )
+    }
+    
+    func testIsAllUppercase() {
         // ダミーのオブザーバをTestScheduler.createObserverで作成する。
         let outputBool = scheduler.createObserver(Bool.self)
         
         // inputを作成する。
-        let inputs = CharacterTypeViewModel.Input(
-            textToCheckUppercaseOnly:
-                scheduler.createColdObservable([
-                    .next(0, ""),
-                    .next(10, "a"),
-                    .next(20, "A"),
-                    .next(30, "aB"),
-                    .next(40, "AB"),
-                ]).asObservable()
-        )
+        let inputs = createViewModelInput(
+            textToCheckUppercaseOnly: scheduler.createColdObservable([
+                .next(10, "a"),
+                .next(20, "A"),
+                .next(30, "aB"),
+                .next(40, "AB"),
+            ]).asObservable()
+            )
         
         let outputs = viewModel.transform(input: inputs)
         
@@ -55,7 +63,6 @@ class CharacterTypeViewModelTest: XCTestCase {
         scheduler.start()
         
         XCTAssertEqual(outputBool.events, [
-            .next(0, false),
             .next(10, false),
             .next(20, true),
             .next(30, false),
@@ -63,5 +70,36 @@ class CharacterTypeViewModelTest: XCTestCase {
         ])
     }
     
+    
+    func testIsAllLowercase() {
+        // ダミーのオブザーバをTestScheduler.createObserverで作成する。
+        let outputBool = scheduler.createObserver(Bool.self)
+        
+        // inputを作成する。
+        let inputs = createViewModelInput(
+            textToCheckLowercaseOnly: scheduler.createColdObservable([
+                    .next(10, "a"),
+                    .next(20, "A"),
+                    .next(30, "aB"),
+                    .next(40, "AB"),
+                ]).asObservable()
+        )
+        
+        let outputs = viewModel.transform(input: inputs)
+        
+        outputs
+            .isValidForLowercaseOnly
+            .drive(outputBool)
+            .disposed(by: disposeBag)
+        
+        scheduler.start()
+        
+        XCTAssertEqual(outputBool.events, [
+            .next(10, true),
+            .next(20, false),
+            .next(30, false),
+            .next(40, false),
+        ])
+    }
 }
 

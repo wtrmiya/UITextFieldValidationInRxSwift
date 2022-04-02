@@ -19,11 +19,28 @@ final class CharacterTypeViewController:UIViewController {
         let textField = UITextField()
         textField.placeholder = "input words in upper case"
         textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
     private let validLabelForUpperCase:UILabel = {
+        let label = UILabel()
+        label.text = "Valid."
+        label.textColor = .green
+        return label
+    }()
+    
+    private let forLowerCaseTextField:UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "input words in upper case"
+        textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let validLabelForLowerCase:UILabel = {
         let label = UILabel()
         label.text = "Valid."
         label.textColor = .green
@@ -61,17 +78,9 @@ final class CharacterTypeViewController:UIViewController {
             outlineView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             outlineView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             
-            // 同じ大きさにする。
-            outlineView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            outlineView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-            
             // 縦スクロールにする。
-//            outlineView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-//            outlineView.heightAnchor.constraint(equalToConstant: 1000),
-            
-            // 横スクロールにする。
-//            outlineView.widthAnchor.constraint(equalToConstant: 800),
-//            outlineView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            outlineView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            outlineView.heightAnchor.constraint(equalToConstant: 1000),
         ])
     }
     
@@ -85,7 +94,7 @@ final class CharacterTypeViewController:UIViewController {
         forUpperCaseTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             forUpperCaseTextField.centerXAnchor.constraint(equalTo: outlineView.centerXAnchor),
-            forUpperCaseTextField.centerYAnchor.constraint(equalTo: outlineView.centerYAnchor),
+            forUpperCaseTextField.topAnchor.constraint(equalTo: outlineView.topAnchor, constant: 100)
         ])
         
         validLabelForUpperCase.translatesAutoresizingMaskIntoConstraints = false
@@ -94,17 +103,41 @@ final class CharacterTypeViewController:UIViewController {
             validLabelForUpperCase.centerXAnchor.constraint(equalTo: outlineView.centerXAnchor),
         ])
         
+        // lowercase
+        outlineView.addSubview(forLowerCaseTextField)
+        outlineView.addSubview(validLabelForLowerCase)
+        
+        forLowerCaseTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            forLowerCaseTextField.centerXAnchor.constraint(equalTo: outlineView.centerXAnchor),
+            forLowerCaseTextField.topAnchor.constraint(equalTo: forUpperCaseTextField.bottomAnchor, constant: 150)
+        ])
+        
+        validLabelForLowerCase.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            validLabelForLowerCase.topAnchor.constraint(equalTo: forLowerCaseTextField.bottomAnchor, constant: 20),
+            validLabelForLowerCase.centerXAnchor.constraint(equalTo: outlineView.centerXAnchor),
+        ])
+        
     }
     
     private func setupViewModel() {
         viewModel = CharacterTypeViewModel()
         
-        let input = CharacterTypeViewModel.Input(textToCheckUppercaseOnly: forUpperCaseTextField.rx.text.orEmpty.asObservable())
+        let input = CharacterTypeViewModel.Input(
+            textToCheckUppercaseOnly: forUpperCaseTextField.rx.text.orEmpty.asObservable(),
+            textToCheckLowercaseOnly: forLowerCaseTextField.rx.text.orEmpty.asObservable()
+        )
         let output = viewModel.transform(input: input)
         
         output.isValidForUppercaseOnly
             .map { !$0 }
             .drive(validLabelForUpperCase.rx.isHidden)
+            .disposed(by: bag)
+        
+        output.isValidForLowercaseOnly
+            .map { !$0 }
+            .drive(validLabelForLowerCase.rx.isHidden)
             .disposed(by: bag)
     }
 }
