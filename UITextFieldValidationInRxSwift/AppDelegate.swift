@@ -16,9 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let vc = MainListViewController()
-        let vc = CharacterCountRangeViewController()
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.window?.rootViewController = navigationController
+//        let vc = CharacterTypeViewController()
+//        let navigationController = UINavigationController(rootViewController: vc)
+//        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = CharacterTypeViewController()
         self.window?.makeKeyAndVisible()
         return true
     }
