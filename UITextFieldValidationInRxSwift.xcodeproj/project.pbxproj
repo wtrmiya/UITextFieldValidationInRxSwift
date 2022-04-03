@@ -10,6 +10,7 @@
 		1DD0365D3F92AFAAF7E20B58 /* Pods_UITextFieldValidationInRxSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7039F0DCABEE7832EA296AB9 /* Pods_UITextFieldValidationInRxSwiftTests.framework */; };
 		5B61A4CCF56DE94D6518CDAD /* Pods_UITextFieldValidationInRxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06185B5AC8FB434F808E970 /* Pods_UITextFieldValidationInRxSwift.framework */; };
 		868AC1A227F8E27B00EE4ED8 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868AC1A127F8E27B00EE4ED8 /* Validation.swift */; };
+		868AC1A427F90D1500EE4ED8 /* ValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868AC1A327F90D1500EE4ED8 /* ValidationTest.swift */; };
 		86D1C81827F796B000752DCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D1C81727F796B000752DCF /* AppDelegate.swift */; };
 		86D1C81C27F796B000752DCF /* MainListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D1C81B27F796B000752DCF /* MainListViewController.swift */; };
 		86D1C82127F796B000752DCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86D1C82027F796B000752DCF /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 		3BC6A68DC796E5B5762E5DA2 /* Pods-UITextFieldValidationInRxSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITextFieldValidationInRxSwiftTests.release.xcconfig"; path = "Target Support Files/Pods-UITextFieldValidationInRxSwiftTests/Pods-UITextFieldValidationInRxSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		7039F0DCABEE7832EA296AB9 /* Pods_UITextFieldValidationInRxSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITextFieldValidationInRxSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		868AC1A127F8E27B00EE4ED8 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		868AC1A327F90D1500EE4ED8 /* ValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationTest.swift; sourceTree = "<group>"; };
 		86D1C81427F796B000752DCF /* UITextFieldValidationInRxSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UITextFieldValidationInRxSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86D1C81727F796B000752DCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86D1C81B27F796B000752DCF /* MainListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				86D1C82E27F796B000752DCF /* UITextFieldValidationInRxSwiftTests.swift */,
+				868AC1A327F90D1500EE4ED8 /* ValidationTest.swift */,
 				86D1C84D27F7A03500752DCF /* CharacterCountMaxViewModelTests.swift */,
 				86D1C85427F7B25400752DCF /* CharacterCountRangeViewModelTest.swift */,
 				86D1C87D27F7F6F700752DCF /* CharacterTypeViewModelTest.swift */,
@@ -391,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86D1C87E27F7F6F700752DCF /* CharacterTypeViewModelTest.swift in Sources */,
+				868AC1A427F90D1500EE4ED8 /* ValidationTest.swift in Sources */,
 				86D1C82F27F796B000752DCF /* UITextFieldValidationInRxSwiftTests.swift in Sources */,
 				86D1C85527F7B25400752DCF /* CharacterCountRangeViewModelTest.swift in Sources */,
 				86D1C84E27F7A03500752DCF /* CharacterCountMaxViewModelTests.swift in Sources */,
