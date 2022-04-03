@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let vc = CharacterTypeViewController()
 //        let navigationController = UINavigationController(rootViewController: vc)
 //        self.window?.rootViewController = navigationController
-        self.window?.rootViewController = CharacterTypeViewController()
+//        self.window?.rootViewController = CharacterTypeViewController()
+        self.window?.rootViewController = MultipluTextFieldsViewController()
         self.window?.makeKeyAndVisible()
         return true
     }
